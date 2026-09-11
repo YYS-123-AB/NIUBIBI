@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="星座运势占卜站 - 12星座每日运势、塔罗牌占卜、生日配对、幸运数字查询">
+  <meta name="keywords" content="星座,运势,塔罗牌,占卜,配对,白羊座,金牛座,双子座,巨蟹座,狮子座,处女座,天秤座,天蝎座,射手座,摩羯座,水瓶座,双鱼座">
+  <title>星座运势占卜站 | 12星座每日运势 · 塔罗占卜 · 生日配对</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <div id="app">
+    <header class="site-header">
+      <div class="container header-inner">
+        <div class="logo">
+          <span class="logo-icon">✨</span>
+          <h1 class="logo-text">星座运势占卜站</h1>
+        </div>
+        <div class="header-actions">
+          <button class="theme-toggle" id="themeToggle" title="切换主题">
+            <span class="theme-icon">🌙</span>
+          </button>
+          <button class="favorites-btn" id="favoritesBtn" title="我的收藏">
+            <span class="fav-icon">❤️</span>
+            <span class="fav-count" id="favCount">0</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <nav class="zodiac-tabs">
+      <div class="container">
+        <div class="zodiac-tabs-scroll" id="zodiacTabs">
+        </div>
+      </div>
+    </nav>
+
+    <div class="fortune-tabs">
+      <div class="container">
+        <div class="fortune-tabs-inner" id="fortuneTabs">
+          <button class="fortune-tab active" data-type="today">今日运势</button>
+          <button class="fortune-tab" data-type="week">本周运势</button>
+          <button class="fortune-tab" data-type="month">本月运势</button>
+          <button class="fortune-tab" data-type="year">本年运势</button>
+          <button class="fortune-tab" data-type="loveOnly">爱情运势</button>
+          <button class="fortune-tab" data-type="careerOnly">事业运势</button>
+          <button class="fortune-tab" data-type="wealthOnly">财运运势</button>
+          <button class="fortune-tab" data-type="healthOnly">健康运势</button>
+        </div>
+      </div>
+    </div>
+
+    <main class="main-content">
+      <div class="container">
+        <div class="search-bar">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="搜索星座名、日期、性格关键词..." />
+            <button class="search-clear" id="searchClear" style="display:none">✕</button>
+          </div>
+        </div>
+
+        <section class="tools-section">
+          <h2 class="section-title"><span>🔮</span> 占卜工具</h2>
+          <div class="tools-grid">
+            <div class="tool-card" id="tarotToolBtn">
+              <div class="tool-icon">🎴</div>
+              <div class="tool-info">
+                <h3>塔罗牌抽牌</h3>
+                <p>抽取3张牌解读你的过去现在未来</p>
+              </div>
+              <div class="tool-arrow">→</div>
+            </div>
+            <div class="tool-card" id="pairToolBtn">
+              <div class="tool-icon">💞</div>
+              <div class="tool-info">
+                <h3>生日配对</h3>
+                <p>输入你和TA的生日，测试星座匹配度</p>
+              </div>
+              <div class="tool-arrow">→</div>
+            </div>
+            <div class="tool-card" id="luckyToolBtn">
+              <div class="tool-icon">🎲</div>
+              <div class="tool-info">
+                <h3>今日幸运数字</h3>
+                <p>查看你的专属幸运数字与今日宜忌</p>
+              </div>
+              <div class="tool-arrow">→</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="zodiac-section">
+          <h2 class="section-title"><span>⭐</span> 十二星座</h2>
+          <div class="loading-state" id="loadingState" style="display:none">
+            <div class="spinner"></div>
+            <p>正在加载星座数据...</p>
+          </div>
+          <div class="empty-state" id="emptyState" style="display:none">
+            <div class="empty-icon">🔍</div>
+            <p>没有找到匹配的星座</p>
+            <button class="btn-primary" id="clearSearchBtn">清除搜索</button>
+          </div>
+          <div class="zodiac-grid" id="zodiacGrid">
+          </div>
+        </section>
+
+        <section class="tarot-section" id="tarotSection" style="display:none">
+          <h2 class="section-title"><span>🎴</span> 塔罗牌占卜</h2>
+          <div class="tarot-container">
+            <div class="tarot-intro">
+              <p>🔮 静心默念你的问题，然后点击下方按钮抽取三张牌，分别代表「过去」「现在」「未来」</p>
+              <button class="btn-primary" id="drawTarotBtn">✨ 开始抽牌 ✨</button>
+            </div>
+            <div class="tarot-cards-wrapper" id="tarotCardsWrapper" style="display:none">
+              <div class="tarot-cards" id="tarotCards"></div>
+              <div class="tarot-result" id="tarotResult"></div>
+              <div class="tarot-actions">
+                <button class="btn-secondary" id="redrawTarotBtn">重新抽牌</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="pair-section" id="pairSection" style="display:none">
+          <h2 class="section-title"><span>💞</span> 生日配对</h2>
+          <div class="pair-container">
+            <div class="pair-form">
+              <div class="pair-input-group">
+                <label>👤 你的生日</label>
+                <input type="date" id="yourBirthday" />
+                <div class="pair-sign-info" id="yourSignInfo"></div>
+              </div>
+              <div class="pair-vs">VS</div>
+              <div class="pair-input-group">
+                <label>💕 TA的生日</label>
+                <input type="date" id="taBirthday" />
+                <div class="pair-sign-info" id="taSignInfo"></div>
+              </div>
+            </div>
+            <button class="btn-primary" id="calcPairBtn" disabled>💫 计算匹配度 💫</button>
+            <div class="pair-result" id="pairResult" style="display:none"></div>
+          </div>
+        </section>
+
+        <section class="lucky-section" id="luckySection" style="display:none">
+          <h2 class="section-title"><span>🎲</span> 今日幸运数字</h2>
+          <div class="lucky-container" id="luckyContainer">
+          </div>
+        </section>
+
+        <section class="favorites-section" id="favoritesSection" style="display:none">
+          <h2 class="section-title"><span>❤️</span> 我的收藏</h2>
+          <div class="empty-state" id="favEmptyState" style="display:none">
+            <div class="empty-icon">💔</div>
+            <p>暂无收藏的星座</p>
+            <p class="empty-hint">点击星座卡片右上角的心形收藏感兴趣的星座吧~</p>
+          </div>
+          <div class="zodiac-grid" id="favoritesGrid">
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <button class="back-to-top" id="backToTop" title="回到顶部">↑</button>
+
+    <div class="modal-overlay" id="detailModal" style="display:none">
+      <div class="modal" id="detailModalContent">
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>✨ 星座运势占卜站 · 仅供娱乐参考 ✨</p>
+        <p class="footer-small">愿每一位朋友都能在星辰中找到属于自己的指引 🌟</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="./js/app.js"></script>
+</body>
+</html>

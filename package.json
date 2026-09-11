@@ -1,0 +1,30 @@
+{
+  "name": "zodiac-fortune-site",
+  "version": "1.0.0",
+  "description": "星座运势占卜站 - 12星座每日运势、塔罗牌占卜、生日配对、幸运数字",
+  "type": "module",
+  "scripts": {
+    "fetch": "node scripts/fetch-data.js",
+    "dev": "vite",
+    "start": "vite --host 0.0.0.0",
+    "build": "npm run fetch && vite build",
+    "preview": "vite preview --host 0.0.0.0"
+  },
+  "keywords": [
+    "zodiac",
+    "星座",
+    "运势",
+    "塔罗牌",
+    "占卜",
+    "配对",
+    "frontend"
+  ],
+  "author": "Zodiac Fortune",
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^5.4.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
